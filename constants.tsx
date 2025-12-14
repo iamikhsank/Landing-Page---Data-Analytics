@@ -56,6 +56,20 @@ export const SERVICES: Service[] = [
 
 export const CASE_STUDIES: CaseStudy[] = [
   {
+    id: 'c6',
+    client: 'EduMap Cimenyan',
+    metric: 'Students Mapped',
+    value: '16,986',
+    description: 'Geospatial dashboard optimizing school zoning (Zonasi) and accessibility analysis.',
+    chartData: [
+      { name: 'Vill A', value: 35 },
+      { name: 'Vill B', value: 28 },
+      { name: 'Vill C', value: 25 },
+      { name: 'Vill D', value: 20 },
+      { name: 'Vill E', value: 18 },
+    ],
+  },
+  {
     id: 'c5',
     client: 'PT Sentul Golf Utama',
     metric: 'Peak Revenue',

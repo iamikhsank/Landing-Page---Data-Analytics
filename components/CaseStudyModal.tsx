@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { X, ArrowRight, TrendingUp, Layers, Activity, Database, CheckCircle2, PieChart, BarChart3, Calendar, Users } from 'lucide-react';
+import { X, ArrowRight, TrendingUp, Layers, Activity, Database, CheckCircle2, PieChart, BarChart3, Calendar, Users, MapPin, School, Route, GraduationCap } from 'lucide-react';
 import NeoButton from './NeoButton';
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, Legend, BarChart, Bar, Pie, Cell } from 'recharts';
 
@@ -17,7 +17,7 @@ const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ id, onClose }) => {
     };
   }, []);
 
-  // --- IDX STOCK PREDICTION DATA (Existing) ---
+  // --- IDX STOCK PREDICTION DATA ---
   const idxChartData = Array.from({ length: 50 }, (_, i) => {
     const x = i;
     const actual = 1000 + (x * 20) + (Math.sin(x * 0.5) * 50);
@@ -29,7 +29,7 @@ const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ id, onClose }) => {
     };
   });
 
-  // --- SENTUL GOLF UTAMA DATA (New) ---
+  // --- SENTUL GOLF UTAMA DATA ---
   const sentulRevenueData = [
     { month: 'Jan', revenue: 2.21 },
     { month: 'Feb', revenue: 1.78 },
@@ -40,24 +40,41 @@ const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ id, onClose }) => {
     { month: 'Jul', revenue: 1.40 },
     { month: 'Aug', revenue: 1.70 },
     { month: 'Sep', revenue: 1.43 },
-    { month: 'Oct', revenue: 0.04 }, // Construction/Renovation drop
+    { month: 'Oct', revenue: 0.04 }, 
   ];
 
   const sentulOutletData = [
-    { name: 'Golf', value: 70, color: '#1E3A8A' }, // ~70%
-    { name: 'Restaurant', value: 15, color: '#3B82F6' }, // ~15%
-    { name: 'Others', value: 15, color: '#93C5FD' }, // ~15%
+    { name: 'Golf', value: 70, color: '#1E3A8A' },
+    { name: 'Restaurant', value: 15, color: '#3B82F6' },
+    { name: 'Others', value: 15, color: '#93C5FD' },
   ];
 
-  const sentulPlayerTypeData = [
-    { name: 'Guest', value: 76 },
-    { name: 'Member', value: 24 },
+  // --- EDU MAPPING CIMENYAN DATA (New) ---
+  const eduVillageData = [
+    { name: 'Cibeunying', schools: 12 },
+    { name: 'Ciburial', schools: 10 },
+    { name: 'Padasuka', schools: 9 },
+    { name: 'Cikadut', schools: 7 },
+    { name: 'Mekarmanik', schools: 6 },
+    { name: 'Mekarsaluyu', schools: 5 },
+    { name: 'Mandalamekar', schools: 5 },
+    { name: 'Cimenyan', schools: 5 },
+    { name: 'Sindanglaya', schools: 4 },
+  ];
+
+  const eduSchoolTable = [
+    { name: 'SMPN 3 CIMENYAN', type: 'SMP', students: 585, time: '14.5 min', dist: '1.5 km' },
+    { name: 'SDN PANGGILINGAN 02', type: 'SD', students: 423, time: '6.6 min', dist: '0.4 km' },
+    { name: 'SDN CIBEUNYING 02', type: 'SD', students: 402, time: '23.6 min', dist: '2.1 km' },
+    { name: 'SDN PANGGILINGAN 01', type: 'SD', students: 394, time: '3.3 min', dist: '0.4 km' },
+    { name: 'SDN SUKAAKUR', type: 'SD', students: 385, time: '2.0 min', dist: '0.5 km' },
   ];
 
   const isIdxProject = id === 'c4';
   const isSentulProject = id === 'c5';
+  const isEduProject = id === 'c6';
 
-  if (!isIdxProject && !isSentulProject) {
+  if (!isIdxProject && !isSentulProject && !isEduProject) {
     return null;
   }
 
@@ -68,11 +85,14 @@ const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ id, onClose }) => {
         {/* Header */}
         <div className="sticky top-0 bg-white/90 backdrop-blur border-b-2 border-brand-dark p-6 flex justify-between items-center z-10">
           <div>
-            <span className="text-sm font-bold bg-blue-100 text-brand-blue px-3 py-1 rounded-full border border-blue-200">
-              {isIdxProject ? 'Finance & Deep Learning' : 'Hospitality & Operational Analytics'}
+            <span className={`text-sm font-bold px-3 py-1 rounded-full border 
+                ${isEduProject ? 'bg-orange-100 text-orange-600 border-orange-200' : 'bg-blue-100 text-brand-blue border-blue-200'}`}>
+              {isIdxProject ? 'Finance & Deep Learning' : isSentulProject ? 'Hospitality & Operational Analytics' : 'Geospatial & Public Policy'}
             </span>
-            <h2 className="text-2xl md:text-3xl font-bold mt-2 text-brand-dark">
-              {isIdxProject ? 'Menaklukkan Volatilitas Pasar Saham Indonesia' : 'PT Sentul Golf Utama: 2025 Performance Report'}
+            <h2 className="text-xl md:text-3xl font-bold mt-2 text-brand-dark leading-tight">
+              {isIdxProject && 'Menaklukkan Volatilitas Pasar Saham Indonesia'}
+              {isSentulProject && 'PT Sentul Golf Utama: 2025 Performance Report'}
+              {isEduProject && 'Pemetaan Akses & Distribusi Pendidikan Cimenyan'}
             </h2>
           </div>
           <button 
@@ -152,75 +172,6 @@ const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ id, onClose }) => {
                       </div>
                    </div>
                 </div>
-                <p className="mt-4 text-gray-600 text-sm">
-                  The stacked architecture allows the model to learn data representations at various levels of abstraction. The bottom layer captures short-term patterns, while the top layers model complex long-term relationships.
-                </p>
-              </div>
-
-              {/* Results Chart */}
-              <div>
-                <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
-                  <TrendingUp className="text-brand-blue" />
-                  Prediction vs Reality (Simulation)
-                </h3>
-                <div className="h-[400px] w-full border-2 border-gray-200 rounded-xl p-4 bg-white">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={idxChartData}>
-                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#eee" />
-                      <XAxis dataKey="day" hide />
-                      <YAxis domain={['auto', 'auto']} />
-                      <Tooltip 
-                        contentStyle={{ backgroundColor: '#191A23', border: 'none', borderRadius: '8px', color: '#fff' }}
-                      />
-                      <Legend />
-                      <Line type="monotone" dataKey="Actual" stroke="#191A23" strokeWidth={3} dot={false} />
-                      <Line type="monotone" dataKey="Predicted" stroke="#3B82F6" strokeWidth={3} strokeDasharray="5 5" dot={false} />
-                    </LineChart>
-                  </ResponsiveContainer>
-                </div>
-                <p className="text-center text-sm text-gray-500 mt-2">
-                  *Visual representation approximating the high correlation (R² > 0.99) achieved for issuers like UNTR and PGAS.
-                </p>
-              </div>
-
-              {/* Companies Analyzed */}
-              <div className="bg-blue-50 p-8 rounded-2xl border-2 border-blue-100">
-                 <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
-                  <Database className="text-brand-blue" />
-                  Companies Analyzed
-                </h3>
-                <div className="flex flex-wrap gap-3">
-                  {['ACES', 'ANTM', 'JPFA', 'KLBF', 'PGAS', 'PTBA', 'PTPP', 'SMGR', 'TLKM', 'UNTR'].map(ticker => (
-                    <span key={ticker} className="bg-white px-4 py-2 rounded-lg font-bold text-brand-dark shadow-sm border border-blue-100">
-                      {ticker}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              {/* Key Takeaways */}
-              <div>
-                 <h3 className="text-xl font-bold mb-6">Key Findings</h3>
-                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="flex gap-4 p-4 border border-gray-200 rounded-xl">
-                      <div className="bg-green-100 p-2 rounded-full h-fit">
-                        <CheckCircle2 size={20} className="text-green-600" />
-                      </div>
-                      <div>
-                        <h4 className="font-bold">Long-Term Dependencies</h4>
-                        <p className="text-sm text-gray-600">Successfully modeled complex temporal relationships using the Forget, Input, and Output gates mechanism.</p>
-                      </div>
-                    </div>
-                    <div className="flex gap-4 p-4 border border-gray-200 rounded-xl">
-                      <div className="bg-green-100 p-2 rounded-full h-fit">
-                        <CheckCircle2 size={20} className="text-green-600" />
-                      </div>
-                      <div>
-                        <h4 className="font-bold">Hierarchical Learning</h4>
-                        <p className="text-sm text-gray-600">The stacked approach proved effective for feature extraction on large sequential datasets.</p>
-                      </div>
-                    </div>
-                 </div>
               </div>
             </>
           )}
@@ -247,11 +198,6 @@ const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ id, onClose }) => {
                       <Calendar size={12} /> January 2025
                     </p>
                   </div>
-                  <div className="space-y-1">
-                    <p className="text-sm text-gray-500 font-bold uppercase">Primary Driver</p>
-                    <p className="font-bold">Golf Operations</p>
-                    <p className="text-xs text-gray-500">~70% of Total Revenue</p>
-                  </div>
                 </div>
               </div>
 
@@ -276,82 +222,114 @@ const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ id, onClose }) => {
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
-                <p className="text-center text-sm text-gray-500 mt-2">
-                  *Significant drop in October due to strategic renovation and operational halt.
-                </p>
+              </div>
+            </>
+          )}
+
+          {/* --- EDU MAPPING CIMENYAN CONTENT (NEW) --- */}
+          {isEduProject && (
+            <>
+              {/* Hero Stats */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="bg-orange-50 border-2 border-orange-200 rounded-xl p-4 text-center">
+                    <div className="text-sm font-bold text-orange-600 uppercase mb-1">Total Siswa</div>
+                    <div className="text-2xl md:text-3xl font-bold text-brand-dark">16,986</div>
+                </div>
+                <div className="bg-blue-50 border-2 border-blue-200 rounded-xl p-4 text-center">
+                    <div className="text-sm font-bold text-brand-blue uppercase mb-1">Total Guru</div>
+                    <div className="text-2xl md:text-3xl font-bold text-brand-dark">831</div>
+                </div>
+                <div className="bg-green-50 border-2 border-green-200 rounded-xl p-4 text-center">
+                    <div className="text-sm font-bold text-green-600 uppercase mb-1">R. Kelas</div>
+                    <div className="text-2xl md:text-3xl font-bold text-brand-dark">622</div>
+                </div>
+                <div className="bg-purple-50 border-2 border-purple-200 rounded-xl p-4 text-center">
+                    <div className="text-sm font-bold text-purple-600 uppercase mb-1">Desa</div>
+                    <div className="text-2xl md:text-3xl font-bold text-brand-dark">9</div>
+                </div>
               </div>
 
-              {/* Composition Analysis */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                 {/* Revenue Mix */}
-                 <div className="bg-gray-50 p-6 rounded-2xl border border-gray-200">
-                    <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
-                      <PieChart className="text-brand-blue" /> Revenue Distribution
-                    </h3>
-                    <div className="h-[250px] w-full">
-                       <ResponsiveContainer width="100%" height="100%">
-                          <PieChart>
-                             <Pie
-                                data={sentulOutletData}
-                                cx="50%"
-                                cy="50%"
-                                innerRadius={60}
-                                outerRadius={80}
-                                paddingAngle={5}
-                                dataKey="value"
-                             >
-                                {sentulOutletData.map((entry, index) => (
-                                  <Cell key={`cell-${index}`} fill={entry.color} />
-                                ))}
-                             </Pie>
-                             <Tooltip />
-                             <Legend />
-                          </PieChart>
-                       </ResponsiveContainer>
-                    </div>
-                    <p className="text-sm text-gray-600 text-center mt-2">
-                       "Golf" outlet is the core business pillar, consistently contributing ~70% of total income.
-                    </p>
-                 </div>
-
-                 {/* Member vs Guest */}
-                 <div className="bg-gray-50 p-6 rounded-2xl border border-gray-200">
-                    <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
-                      <Users className="text-brand-blue" /> Player Segmentation
-                    </h3>
-                     <div className="h-[250px] w-full flex items-end justify-center gap-8 pb-4">
-                        <div className="w-24 bg-brand-blue h-[76%] rounded-t-lg relative group">
-                           <span className="absolute -top-6 left-0 w-full text-center font-bold">76%</span>
-                           <span className="absolute bottom-2 left-0 w-full text-center text-white text-sm">Guest</span>
-                        </div>
-                        <div className="w-24 bg-brand-dark h-[24%] rounded-t-lg relative group">
-                           <span className="absolute -top-6 left-0 w-full text-center font-bold">24%</span>
-                           <span className="absolute bottom-2 left-0 w-full text-center text-white text-sm">Member</span>
-                        </div>
-                     </div>
-                     <p className="text-sm text-gray-600 text-center mt-2">
-                       "Guest" segment (non-members) dominates revenue generation, highlighting strong tourism/visitor appeal.
-                    </p>
-                 </div>
+              {/* Context */}
+              <div className="flex flex-col md:flex-row gap-8 items-start">
+                  <div className="flex-1 space-y-4">
+                      <h3 className="text-xl font-bold flex items-center gap-2">
+                        <MapPin className="text-brand-blue" />
+                        Geospatial Optimization
+                      </h3>
+                      <p className="text-gray-700 leading-relaxed">
+                          This dashboard was developed to analyze the <strong>accessibility (Zonasi)</strong> and distribution of education facilities in Cimenyan District. By mapping residential clusters ("Dapur") to the nearest schools within a 3km radius, we identified coverage gaps and calculated travel times to optimize student allocation.
+                      </p>
+                      <div className="flex gap-2 flex-wrap">
+                          <span className="text-xs font-bold bg-brand-gray px-2 py-1 rounded border border-brand-dark">Mapbox</span>
+                          <span className="text-xs font-bold bg-brand-gray px-2 py-1 rounded border border-brand-dark">Tableau</span>
+                          <span className="text-xs font-bold bg-brand-gray px-2 py-1 rounded border border-brand-dark">Network Analysis</span>
+                      </div>
+                  </div>
+                  <div className="flex-1 bg-brand-dark rounded-xl p-1 shadow-neo">
+                      {/* Placeholder for Map Visual - simulating the dark map in PDF */}
+                      <div className="w-full h-48 bg-gray-800 rounded-lg relative overflow-hidden flex items-center justify-center group">
+                          <div className="absolute inset-0 opacity-30 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-500 via-transparent to-transparent"></div>
+                          {/* Simulated Map Points */}
+                          <div className="absolute top-1/2 left-1/2 w-2 h-2 bg-orange-500 rounded-full animate-ping"></div>
+                          <div className="absolute top-1/3 left-1/3 w-1.5 h-1.5 bg-blue-400 rounded-full"></div>
+                          <div className="absolute bottom-1/4 right-1/4 w-1.5 h-1.5 bg-blue-400 rounded-full"></div>
+                          <span className="relative z-10 text-white font-mono text-xs bg-black/50 px-2 py-1 rounded">Interactive Map Visualization</span>
+                      </div>
+                  </div>
               </div>
 
-              {/* Key Insights */}
-              <div className="space-y-4">
-                 <h3 className="text-xl font-bold">Strategic Insights</h3>
-                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="p-4 border border-gray-200 rounded-xl bg-white shadow-sm">
-                       <div className="font-bold text-brand-blue mb-2">Seasonality Patterns</div>
-                       <p className="text-sm text-gray-600">Identified "Low Season" in March and "Peak Season" in Jan/May/Aug, allowing for optimized staff rostering.</p>
-                    </div>
-                    <div className="p-4 border border-gray-200 rounded-xl bg-white shadow-sm">
-                       <div className="font-bold text-brand-blue mb-2">F&B Correlation</div>
-                       <p className="text-sm text-gray-600">Strong positive correlation between Golf Rounds and Restaurant sales. Top items: Jumbo Ice Tea & Mineral Water.</p>
-                    </div>
-                    <div className="p-4 border border-gray-200 rounded-xl bg-white shadow-sm">
-                       <div className="font-bold text-brand-blue mb-2">Strategic Pivot</div>
-                       <p className="text-sm text-gray-600">October revenue drop was a planned strategic move for renovations (Sequoia Hills project), not a market failure.</p>
-                    </div>
-                 </div>
+              {/* Distribution Chart */}
+              <div className="border-2 border-brand-dark rounded-2xl p-6 bg-white">
+                  <h3 className="text-lg font-bold mb-6 flex items-center gap-2">
+                    <School className="text-brand-blue" />
+                    Jumlah Sekolah Berdasarkan Lokasi Desa
+                  </h3>
+                  <div className="h-[300px] w-full">
+                    <ResponsiveContainer width="100%" height="100%">
+                        <BarChart layout="vertical" data={eduVillageData} margin={{ left: 20 }}>
+                            <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#eee" />
+                            <XAxis type="number" hide />
+                            <YAxis dataKey="name" type="category" width={100} tick={{fontSize: 12, fontWeight: 600}} />
+                            <Tooltip 
+                                contentStyle={{ backgroundColor: '#fff', border: '2px solid #191A23', borderRadius: '8px' }}
+                                cursor={{fill: '#f3f4f6'}}
+                            />
+                            <Bar dataKey="schools" fill="#D97706" radius={[0, 4, 4, 0]} barSize={20} />
+                        </BarChart>
+                    </ResponsiveContainer>
+                  </div>
+              </div>
+
+              {/* School Profile Table */}
+              <div>
+                  <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
+                    <Route className="text-brand-blue" />
+                    Profil Aksesibilitas Sekolah (Top 5 Sample)
+                  </h3>
+                  <div className="overflow-x-auto border-2 border-brand-dark rounded-xl">
+                      <table className="w-full text-sm text-left">
+                          <thead className="bg-brand-gray border-b-2 border-brand-dark text-brand-dark font-bold uppercase">
+                              <tr>
+                                  <th className="px-6 py-3">Nama Sekolah</th>
+                                  <th className="px-6 py-3">Tingkat</th>
+                                  <th className="px-6 py-3">Jumlah Siswa</th>
+                                  <th className="px-6 py-3">Waktu Tempuh</th>
+                                  <th className="px-6 py-3">Jarak</th>
+                              </tr>
+                          </thead>
+                          <tbody className="divide-y divide-gray-200">
+                              {eduSchoolTable.map((school, i) => (
+                                  <tr key={i} className="hover:bg-blue-50 transition-colors bg-white">
+                                      <td className="px-6 py-4 font-bold">{school.name}</td>
+                                      <td className="px-6 py-4"><span className="bg-brand-dark text-white text-xs px-2 py-0.5 rounded">{school.type}</span></td>
+                                      <td className="px-6 py-4">{school.students}</td>
+                                      <td className="px-6 py-4 text-green-600 font-bold">{school.time}</td>
+                                      <td className="px-6 py-4">{school.dist}</td>
+                                  </tr>
+                              ))}
+                          </tbody>
+                      </table>
+                  </div>
               </div>
             </>
           )}
