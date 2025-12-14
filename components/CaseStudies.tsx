@@ -4,7 +4,11 @@ import { CASE_STUDIES } from '../constants';
 import { ResponsiveContainer, AreaChart, Area, XAxis, Tooltip } from 'recharts';
 import { ArrowRight } from 'lucide-react';
 
-const CaseStudies: React.FC = () => {
+interface CaseStudiesProps {
+  onSelectCase?: (id: string) => void;
+}
+
+const CaseStudies: React.FC<CaseStudiesProps> = ({ onSelectCase }) => {
   return (
     <section id="cases" className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -54,10 +58,13 @@ const CaseStudies: React.FC = () => {
                   </div>
                 </div>
                 
-                <div className="flex items-center gap-2 text-blue-400 cursor-pointer hover:underline mt-auto">
+                <button 
+                  onClick={() => onSelectCase?.(study.id)}
+                  className="flex items-center gap-2 text-blue-400 cursor-pointer hover:underline mt-auto group bg-transparent border-0 p-0 text-left"
+                >
                   <span>Read full case</span>
-                  <ArrowRight size={16} />
-                </div>
+                  <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                </button>
               </div>
             ))}
 

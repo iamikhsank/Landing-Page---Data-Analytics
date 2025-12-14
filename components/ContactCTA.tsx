@@ -12,7 +12,9 @@ const ContactCTA: React.FC = () => {
             <p className="text-lg text-gray-700 mb-8">
               Contact us today to learn more about how our data analysis services can help your business grow and succeed online.
             </p>
-            <NeoButton variant="primary">Get your free proposal</NeoButton>
+            <a href="https://wa.me/089529341000" target="_blank" rel="noopener noreferrer" className="inline-block">
+              <NeoButton variant="primary">Get your free proposal</NeoButton>
+            </a>
           </div>
 
           {/* Abstract Decoration */}

@@ -25,7 +25,9 @@ const Hero: React.FC = () => {
               Our data analysis agency helps businesses grow and succeed through predictive modeling, BI dashboards, and actionable insights.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <NeoButton>Book a consultation</NeoButton>
+              <a href="https://wa.me/089529341000" target="_blank" rel="noopener noreferrer">
+                <NeoButton>Book a consultation</NeoButton>
+              </a>
             </div>
           </div>
 
